@@ -3,6 +3,7 @@
 import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import React from 'react'
+import html_to_pdf from 'html-pdf-node';
 
 const MenuBar = ({editor}: any) => {
   if (!editor) {
@@ -207,6 +208,14 @@ export default () => {
   })
 
   console.log('EDITOR HTML', editor?.getHTML());
+
+  const options = { format: 'A4' };
+
+    const file = { content: "<h1>Welcome to html-pdf-node</h1>" };
+
+html_to_pdf.generatePdf(file, options).then(pdfBuffer => {
+  console.log("PDF Buffer:-", pdfBuffer);
+});
   
 
   return (
@@ -214,7 +223,7 @@ export default () => {
       <MenuBar editor={editor} />
       <EditorContent editor={editor} />
 
-      <button>Download PDF</button>
+      <button onClick={() => console.log(editor?.getHTML())}>Download PDF</button>
     </div>
   )
 }
